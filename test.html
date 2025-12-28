@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מבוא ל-HTTPS ואבטחת מידע</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3; /* כחול אבטחה */
+            --secondary-color: #00a8cc;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* כותרת ולוגו */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            margin-bottom: 1rem;
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 2px solid var(--white);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.2rem;
+        }
+
+        /* ניווט כפתורים */
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tab-btn {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background-color: rgba(0, 86, 179, 0.1);
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            box-shadow: 0 4px 8px rgba(0, 86, 179, 0.3);
+        }
+
+        /* תוכן ראשי */
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            min-height: 50vh;
+        }
+
+        .content-section {
+            display: none; /* מוסתר כברירת מחדל */
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block; /* מוצג כשיש לו קלאס active */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #444;
+            margin-top: 1.5rem;
+        }
+
+        ul {
+            list-style-type: none; /* הסרת הנקודות המקוריות */
+            padding-right: 0;
+        }
+
+        li {
+            position: relative;
+            padding-right: 25px;
+            margin-bottom: 10px;
+        }
+
+        li::before {
+            content: "🛡️"; /* אייקון במקום נקודה */
+            position: absolute;
+            right: 0;
+            top: 2px;
+        }
+
+        /* עיצוב תמונות בתוך התוכן */
+        .topic-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+
+        .highlight-box {
+            background-color: #eefbff;
+            border-right: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #ccc;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src=iconint.jpeg style="border:none; border-radius: 50%;">
+        </div>
+        <h1>פרויקט HTTPS ואבטחת אתרים</h1>
+    </header>
+
+    <nav class="nav-container">
+        <button class="tab-btn active" onclick="openTab('intro')">מבוא ל-HTTPS</button>
+        <button class="tab-btn" onclick="openTab('theory')">הסבר תיאורטי</button>
+        <button class="tab-btn" onclick="openTab('encryption')">1. הצפנה</button>
+        <button class="tab-btn" onclick="openTab('auth')">2. אימות</button>
+        <button class="tab-btn" onclick="openTab('integrity')">3. שלמות הנתונים</button>
+    </nav>
+
+    <main>
+
+        <section id="intro" class="content-section active">
+            <h2>🛡️ מבוא לשרת HTTPS</h2>
+            <img src="screen.png" alt="אבטחת אתרים" class="topic-image">
+            <p>
+                שרת <strong>HTTPS</strong> (Hypertext Transfer Protocol Secure) הוא הסטנדרט המקובל והמחייב כיום להפעלת אתרי אינטרנט. עיקר תפקידו הוא לספק אבטחה לתקשורת בין הלקוח (הדפדפן) לשרת, על ידי הוספת שכבת הצפנה ואמצעי אימות.
+            </p>
+            
+            <h3>יתרונות מרכזיים:</h3>
+            <ul>
+                <li><strong>אבטחת מידע קריטית:</strong> מונע האזנת סתר, יירוט ושינוי של הנתונים המועברים (כגון סיסמאות, פרטי אשראי, ומידע אישי) על ידי תוקפי Man-in-the-Middle.</li>
+                <li><strong>אמון משתמשים:</strong> הופך את האתר לאמין יותר בעיני המשתמשים, אשר רואים את סמל המנעול ליד כתובת האתר.</li>
+                <li><strong>שיפור SEO:</strong> מנועי חיפוש כמו גוגל מעניקים דירוג טוב יותר לאתרים מאובטחים ב-HTTPS.</li>
+                <li><strong>נדרש עבור תכונות מודרניות:</strong> תכונות רבות בדפדפנים מודרניים (כמו PWA's) דורשות חיבור מאובטח.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>נקודות לתשומת לב:</strong><br>
+                התקנה ותחזוקה דורשות תעודת SSL/TLS. בעבר הייתה השפעה על ביצועים, אך כיום עם חומרה מודרנית ופרוטוקול TLS 1.3 ההשפעה זניחה. חשוב לזכור כי האבטחה תלויה ביישום נכון ובהנפקה אמינה (CA).
+            </div>
+        </section>
+
+        <section id="theory" class="content-section">
+            <h2>💡 הסבר תיאורטי על HTTPS</h2>
+            <img src="unnamed.jpg" alt="השוואה בין HTTP ל HTTPS" class="topic-image">
+            <p>
+                HTTPS אינו פרוטוקול תקשורת נפרד, אלא שילוב של פרוטוקול HTTP הרגיל עם שכבת אבטחה קריפטוגרפית. שכבת האבטחה הזו היא כיום פרוטוקול <strong>TLS</strong> (Transport Layer Security), שהחליף את קודמו SSL (Secure Sockets Layer).
+            </p>
+            <p>הפרויקט של HTTPS מתמקד ביצירת ערוץ תקשורת מאובטח המבטיח שלושה דברים עיקריים: הצפנה, אימות ושלמות הנתונים.</p>
+        </section>
+
+        <section id="encryption" class="content-section">
+            <h2>1. הצפנה (Encryption)</h2>
+            <img src="unnamedEncryption.jpg" alt="תהליך ההצפנה" class="topic-image">
+            <p>
+                התקשורת כולה בין הלקוח לשרת מוצפנת, כך שגם אם צד שלישי יירט את הנתונים, הוא לא יוכל לקרוא אותם (הם יהיו חסרי משמעות).
+            </p>
+            <h3>תהליך לחיצת היד (TLS Handshake)</h3>
+            <p>לפני העברת הנתונים בפועל, הלקוח והשרת מנהלים תהליך הידברות מורכב:</p>
+            <ol>
+                <li>מחליפים מידע על גרסאות TLS ואלגוריתמים קריפטוגרפיים נתמכים.</li>
+                <li>משתמשים בקריפטוגרפיה א-סימטרית (מפתח ציבורי ופרטי) לשם החלפת מפתח סודי משותף (Session Key).</li>
+                <li>לאחר החלפת המפתח, כל התקשורת בהמשך עוברת באמצעות קריפטוגרפיה סימטרית (שהיא מהירה יותר), תוך שימוש במפתח הסודי המשותף.</li>
+            </ol>
+        </section>
+
+        <section id="auth" class="content-section">
+            <h2>2. אימות (Authentication)</h2>
+            <img src="unnamedSSL.jpg" alt="תעודת SSL" class="topic-image">
+            <p>
+                הלקוח מוודא שהוא אכן מתקשר עם השרת האמיתי של האתר (ולא עם מתחזה).
+            </p>
+            <h3>תעודת SSL/TLS</h3>
+            <p>השרת שולח ללקוח תעודת SSL/TLS (Certificate), שהיא קובץ דיגיטלי המונפק על ידי גורם מאשר (Certificate Authority - CA) מהימן.</p>
+            <ul>
+                <li>התעודה מכילה את המפתח הציבורי של השרת, את שם הדומיין המאומת, ואת החתימה הדיגיטלית של ה-CA.</li>
+                <li>הלקוח משתמש במפתחות הציבוריים של ה-CAs ששמורים אצלו מראש כדי לאמת את החתימה הדיגיטלית של התעודה, ובכך לוודא את זהות השרת.</li>
+            </ul>
+        </section>
+
+        <section id="integrity" class="content-section">
+            <h2>3. שלמות הנתונים (Integrity)</h2>
+            <img src="unnamedIntegrity.jpg" alt="שלמות הנתונים" class="topic-image">
+            <p>
+                עקרון זה מבטיח שהנתונים שהועברו לא שונו או שובשו במהלך המעבר מהלקוח לשרת או להיפך.
+            </p>
+            <h3>איך זה עובד? (Hash Function)</h3>
+            <p>
+                השרת (והלקוח) מצרפים לכל הודעה קוד אימות (Message Authentication Code - MAC) שנוצר באמצעות פונקציית גיבוב (Hash) המשתמשת במפתח הסודי המשותף.
+            </p>
+            <p>
+                הצד המקבל מחשב מחדש את קוד האימות של ההודעה ומכך מוודא שהוא תואם לקוד שצורף. אי-התאמה מעידה על כך שהנתונים שונו בדרך.
+            </p>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2024 פרויקט HTTPS | נוצר לצרכי לימוד</p>
+    </footer>
+
+    <script>
+        function openTab(tabName) {
+            // 1. הסתרת כל התוכן
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // 2. הסרת העיצוב הפעיל מכל הכפתורים
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // 3. הצגת התוכן הרצוי וסימון הכפתור שנלחץ
+            document.getElementById(tabName).classList.add('active');
+            
+            // מציאת הכפתור שנלחץ והוספת ה-class שלו (דרך ה-Event או בלולאה פשוטה)
+            // כאן נשתמש בטריק קטן - המערכת תזהה את הכפתור לפי ה-onclick
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
